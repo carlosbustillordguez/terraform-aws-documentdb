@@ -1,0 +1,65 @@
+# Uncomment if commitlint is used
+default_stages: [commit]
+
+repos:
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v4.5.0
+  hooks:
+    # Git style
+    - id: check-added-large-files
+    - id: check-merge-conflict
+    - id: check-vcs-permalinks
+    - id: forbid-new-submodules
+    # - id: no-commit-to-branch
+
+    # Common errors
+    - id: end-of-file-fixer
+    - id: trailing-whitespace
+      args: [--markdown-linebreak-ext=md]
+    - id: check-yaml
+    - id: check-json
+    - id: check-executables-have-shebangs
+
+    # Cross platform
+    - id: check-case-conflict
+    - id: mixed-line-ending
+      args: [--fix=lf]
+
+    # Security
+    - id: detect-private-key
+
+- repo: https://github.com/alessandrojcm/commitlint-pre-commit-hook
+  rev: v9.10.0
+  hooks:
+      # Checks if your commit messages meet the conventional commit format
+      - id: commitlint
+        stages: [commit-msg]
+        additional_dependencies: ['@commitlint/config-conventional']
+
+- repo: https://github.com/antonbabenko/pre-commit-terraform
+  rev: v1.84.0
+  hooks:
+    - id: terraform_validate
+    - id: terraform_fmt
+      args:
+        - --args=-no-color
+        - --args=-diff
+        - --args=-write=false
+    # Detect compliance and security violations across IaC to mitigate risk before provisioning cloud native infrastructure.
+    # Commented due to not working correclty with the last version of Terraform
+    # - id: terrascan
+    #   args:
+    #     - --args=--non-recursive # avoids scan errors on directories without Terraform config files
+    #     - --args=--policy-type aws
+    # Security scanner for your Terraform code.
+    - id: terraform_tfsec
+    # A Pluggable Terraform Linter
+    - id: terraform_tflint
+      args:
+        - --args=--config=__GIT_WORKING_DIR__/.tflint.hcl
+        - --args=--module
+    # Inserts input and output documentation into README.md (using terraform-docs).
+    - id: terraform_docs_without_aggregate_type_defaults
+      args:
+        - --hook-config=--path-to-file=README.md
+        - --args=--config=.terraform-docs.yml
