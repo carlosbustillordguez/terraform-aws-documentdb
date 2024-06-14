@@ -64,7 +64,7 @@ jobs:
           message: |
             Hey there and thank you for opening this pull request! 👋🏼
 
-            We require pull request titles to follow the approved [PR title specification](https://nexplore.atlassian.net/wiki/spaces/NEXC/pages/1213530787/Pull+Request+Guideline) and it looks like your proposed title needs to be adjusted.
+            We require pull request titles to follow the approved [PR title specification](https://gist.github.com/carlosbustillordguez/c7c45a1cfbb50c30a488ceebda6ef18f) and it looks like your proposed title needs to be adjusted.
 
             Details:
 
